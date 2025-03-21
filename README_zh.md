@@ -1,26 +1,36 @@
+<!--
+ * @Author: Mr.Car
+ * @Date: 2025-03-20 17:40:04
+-->
 # Weather MCP Tool
 
+[![smithery badge](https://smithery.ai/badge/@MrCare/mcp_tool)](https://smithery.ai/server/@MrCare/mcp_tool)
 [English](README.md) | [中文](README_zh.md)
 
-一个极简的天气查询 MCP 工具，只需一句话即可查询全球天气。完美集成 Cursor、Windsurf 和 Cine 编辑器，支持中英文自然语言交互。
+一个极简的天气查询 MCP 工具，只需一句话即可查询全球天气。完美集成 Cursor 编辑器，支持中英文自然语言交互。
 
 ## 特性
 
 - 💡 极简使用：一句话查询天气
 - 🤖 智能交互：支持中英文自然语言
 - 🌏 全球天气：支持所有主要城市
-- 🔌 即插即用：完美集成 Cursor/Windsurf/Cine
-- 🚀 零安装：通过 Smithery 直接运行
+- 🔌 即插即用：完美集成 Cursor
 
-## 三步上手
+## 快速开始
 
-### 方式一：通过 Smithery 运行（无需安装）
+### 1. 安装
+
+#### 方法一：一键安装（推荐）
+
+使用 Smithery 一键安装并配置（需要提前准备好 OpenWeather API Key）：
 
 ```bash
-smithery run github.com/yourusername/weather-server
+npx -y @smithery/cli@latest install @MrCare/mcp_tool --client cursor --config "{\"openweathermapApiKey\":\"your_api_key_here\",\"port\":8000}"
 ```
 
-### 方式二：传统安装
+> WindSurf 和 Cine 的安装方法请访问我们的 [Smithery 仓库](https://smithery.ai/server/@MrCare/mcp_tool)。
+
+#### 方法二：手动安装
 
 ```bash
 git clone https://github.com/yourusername/weather-server.git && cd weather-server && pip install -e .
@@ -52,7 +62,6 @@ set OPENWEATHERMAP_API_KEY=your_api_key
 
 ### 3. 启用工具
 
-#### Cursor 配置
 编辑 `~/.cursor/mcp.json`（Windows: `%USERPROFILE%\.cursor\mcp.json`）：
 ```json
 {
@@ -63,38 +72,16 @@ set OPENWEATHERMAP_API_KEY=your_api_key
 }
 ```
 
-#### Windsurf 配置
-编辑 `~/.windsurf/mcp.json`（Windows: `%USERPROFILE%\.windsurf\mcp.json`）：
-```json
-{
-    "weather_fastmcp": {
-        "command": "python",
-        "args": ["-m", "weather_server.server"]
-    }
-}
-```
-
-#### Cine 配置
-编辑 `~/.cine/mcp.json`（Windows: `%USERPROFILE%\.cine\mcp.json`）：
-```json
-{
-    "weather_fastmcp": {
-        "command": "python",
-        "args": ["-m", "weather_server.server"]
-    }
-}
-```
-
-重启编辑器即可使用！
+重启 Cursor 即可使用！
 
 ## 使用示例
 
 直接在 Cursor 中输入：
 ```
-查询苏州天气
-北京明天会下雨吗？
-Show me the weather in Tokyo
-What's the forecast for London?
+查询东京天气
+伦敦天气预报怎么样？
+纽约现在天气如何？
+明天巴黎会下雨吗？
 ```
 
 就是这么简单！
