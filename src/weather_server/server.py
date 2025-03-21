@@ -5,79 +5,19 @@ Date: 2025-03-20 20:18:33
 from fastmcp import FastMCP
 import httpx
 import os
-from dataclasses import dataclass
 from dotenv import load_dotenv
-import pinyin
 
+from .models import WeatherData, ForecastData, WeatherForecast
+from .utils import CityNameConverter
+
+# 加载环境变量
 load_dotenv()
 
-# 定义天气数据类
-@dataclass
-class WeatherData:
-    description: str
-    temperature: float
-    humidity: int
-    wind_speed: float
-    city: str
-
-    def format_message(self) -> str:
-        return f"当前{self.city}的天气：{self.description}，温度{self.temperature}°C，湿度{self.humidity}%，风速{self.wind_speed}米/秒"
-
-# 添加天气预报数据类
-@dataclass
-class ForecastData:
-    date: str
-    description: str
-    temp_min: float
-    temp_max: float
-    humidity: int
-    wind_speed: float
-    city: str
-
-    def format_message(self) -> str:
-        return f"{self.date} {self.city}的天气预报：{self.description}，温度{self.temp_min}°C至{self.temp_max}°C，湿度{self.humidity}%，风速{self.wind_speed}米/秒"
+# 初始化工具类
+city_converter = CityNameConverter()
 
 # 初始化 FastMCP 服务器
 server = FastMCP()
-
-class CityNameConverter:
-    def __init__(self):
-        # 基础城市映射
-        self._city_map = {
-            "苏州": "suzhou",
-            "北京": "beijing",
-            "上海": "shanghai",
-            "广州": "guangzhou",
-            "深圳": "shenzhen",
-        }
-    
-    def to_english(self, city: str) -> str:
-        """
-        将城市名转换为英文，使用多种策略：
-        1. 直接映射
-        2. 拼音转换（去声调）
-        3. 如果已经是英文则保持不变
-        """
-        # 如果已经在映射表中，直接返回
-        if city in self._city_map:
-            return self._city_map[city]
-            
-        # 如果输入是英文，直接返回
-        if all(ord(c) < 128 for c in city):
-            return city.lower()
-            
-        # 尝试转换为拼音（去掉声调和空格）
-        try:
-            # 移除特殊字符
-            city = ''.join(c for c in city if c.isalnum() or c.isspace())
-            py = pinyin.get(city, format="strip")
-            return py.lower().replace(" ", "")
-        except:
-            # 如果转换失败，返回原始输入
-            return city
-
-# 创建转换器实例
-city_converter = CityNameConverter()
 
 @server.tool()
 async def get_weather(
@@ -99,10 +39,12 @@ async def get_weather(
     # 转换城市名称
     english_city = city_converter.to_english(city)
     
+    # 获取 API Key
     api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if not api_key:
         raise ValueError("缺少 OPENWEATHERMAP_API_KEY 环境变量")
 
+    # 设置请求参数
     params = {
         "q": english_city,
         "appid": api_key,
@@ -111,6 +53,7 @@ async def get_weather(
     }
 
     try:
+        # 发送请求
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 "http://api.openweathermap.org/data/2.5/weather",
@@ -120,6 +63,7 @@ async def get_weather(
             response.raise_for_status()
             data = response.json()
 
+            # 返回天气数据
             return WeatherData(
                 description=data["weather"][0]["description"],
                 temperature=data["main"]["temp"],
@@ -161,19 +105,22 @@ async def get_weather_forecast(
     # 转换城市名称
     english_city = city_converter.to_english(city)
     
+    # 获取 API Key
     api_key = os.getenv("OPENWEATHERMAP_API_KEY")
     if not api_key:
         raise ValueError("缺少 OPENWEATHERMAP_API_KEY 环境变量")
 
+    # 设置请求参数
     params = {
         "q": english_city,
         "appid": api_key,
         "units": units,
         "lang": lang,
-        "cnt": min(days * 8, 40)
+        "cnt": min(days * 8, 40)  # 每天8个时间点，最多5天
     }
 
     try:
+        # 发送请求
         async with httpx.AsyncClient() as client:
             response = await client.get(
                 "http://api.openweathermap.org/data/2.5/forecast",
@@ -216,20 +163,8 @@ async def get_weather_forecast(
                     city=city
                 ))
             
-            # 修改返回格式为字典
-            return {
-                "forecasts": [
-                    {
-                        "date": forecast.date,
-                        "description": forecast.description,
-                        "temp_min": forecast.temp_min,
-                        "temp_max": forecast.temp_max,
-                        "humidity": forecast.humidity,
-                        "wind_speed": forecast.wind_speed,
-                        "city": forecast.city
-                    } for forecast in result
-                ]
-            }
+            # 返回预报数据
+            return WeatherForecast(forecasts=result).to_dict()
             
     except httpx.TimeoutException:
         raise Exception("请求超时，请稍后重试")
