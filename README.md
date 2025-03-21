@@ -4,6 +4,7 @@
 -->
 # Weather MCP Tool
 
+[![smithery badge](https://smithery.ai/badge/@MrCare/mcp_tool)](https://smithery.ai/server/@MrCare/mcp_tool)
 [English](README.md) | [中文](README_zh.md)
 
 <!-- Chinese Version -->
@@ -22,6 +23,15 @@
 
 ### 1. 安装
 
+#### Installing via Smithery
+
+To install mcp_tool for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@MrCare/mcp_tool):
+
+```bash
+npx -y @smithery/cli install @MrCare/mcp_tool --client claude
+```
+
+#### Manual Installation
 ```bash
 git clone https://github.com/yourusername/weather-server.git && cd weather-server && pip install -e .
 ```
@@ -117,6 +127,15 @@ A minimalist weather query MCP tool that allows you to check global weather with
 
 ### 1. Installation
 
+#### Installing via Smithery
+
+To install mcp_tool for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@MrCare/mcp_tool):
+
+```bash
+npx -y @smithery/cli install @MrCare/mcp_tool --client claude
+```
+
+#### Manual Installation
 ```bash
 git clone https://github.com/yourusername/weather-server.git && cd weather-server && pip install -e .
 ```
