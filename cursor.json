@@ -1,0 +1,72 @@
+{
+    "name": "weather",
+    "description": "天气查询工具",
+    "version": "1.0.0",
+    "author": "Mr.Car",
+    "type": "mcp",
+    "tools": [
+        {
+            "name": "get_weather",
+            "description": "获取指定城市的实时天气信息",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "description": "城市名称（支持中文或英文，如：苏州、suzhou）"
+                    },
+                    "units": {
+                        "type": "string",
+                        "description": "温度单位 (metric: 摄氏度, imperial: 华氏度)",
+                        "default": "metric",
+                        "enum": ["metric", "imperial"]
+                    },
+                    "lang": {
+                        "type": "string",
+                        "description": "返回语言 (zh_cn: 中文, en: 英文)",
+                        "default": "zh_cn",
+                        "enum": ["zh_cn", "en"]
+                    }
+                },
+                "required": ["city"]
+            }
+        },
+        {
+            "name": "get_weather_forecast",
+            "description": "获取指定城市的天气预报信息",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "city": {
+                        "type": "string",
+                        "description": "城市名称（支持中文或英文，如：苏州、suzhou）"
+                    },
+                    "days": {
+                        "type": "integer",
+                        "description": "预报天数（最多5天）",
+                        "default": 5,
+                        "minimum": 1,
+                        "maximum": 5
+                    },
+                    "units": {
+                        "type": "string",
+                        "description": "温度单位 (metric: 摄氏度, imperial: 华氏度)",
+                        "default": "metric",
+                        "enum": ["metric", "imperial"]
+                    },
+                    "lang": {
+                        "type": "string",
+                        "description": "返回语言 (zh_cn: 中文, en: 英文)",
+                        "default": "zh_cn",
+                        "enum": ["zh_cn", "en"]
+                    }
+                },
+                "required": ["city"]
+            }
+        }
+    ],
+    "entry": {
+        "module": "weather_server.server",
+        "class": null
+    }
+} 
