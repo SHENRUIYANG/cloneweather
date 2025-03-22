@@ -7,7 +7,9 @@ from typing import List
 
 @dataclass
 class WeatherData:
-    """实时天气数据模型"""
+    """Real-time weather data model
+    
+    实时天气数据模型"""
     description: str
     temperature: float
     humidity: int
@@ -15,12 +17,16 @@ class WeatherData:
     city: str
 
     def format_message(self) -> str:
-        """格式化天气信息消息"""
+        """Format weather information message
+        
+        格式化天气信息消息"""
         return f"当前{self.city}的天气：{self.description}，温度{self.temperature}°C，湿度{self.humidity}%，风速{self.wind_speed}米/秒"
 
 @dataclass
 class ForecastData:
-    """天气预报数据模型"""
+    """Weather forecast data model
+    
+    天气预报数据模型"""
     date: str
     description: str
     temp_min: float
@@ -30,16 +36,22 @@ class ForecastData:
     city: str
 
     def format_message(self) -> str:
-        """格式化天气预报消息"""
+        """Format weather forecast message
+        
+        格式化天气预报消息"""
         return f"{self.date} {self.city}的天气预报：{self.description}，温度{self.temp_min}°C至{self.temp_max}°C，湿度{self.humidity}%，风速{self.wind_speed}米/秒"
 
 @dataclass
 class WeatherForecast:
-    """天气预报集合"""
+    """Weather forecast collection
+    
+    天气预报集合"""
     forecasts: List[ForecastData]
 
     def to_dict(self) -> dict:
-        """转换为字典格式"""
+        """Convert to dictionary format
+        
+        转换为字典格式"""
         return {
             "forecasts": [
                 {

@@ -14,6 +14,11 @@
   [English](README.md) | [中文](README_zh.md)
 </div>
 
+<div align="center">
+  <img src="real_en.gif" alt="Weather MCP Tool Demo" width="100%">
+  <p><i>Watch how easy it is to query weather with natural language</i></p>
+</div>
+
 ## ✨ Features
 
 - 💡 **Minimalist**: One-line weather query

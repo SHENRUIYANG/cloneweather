@@ -14,6 +14,11 @@
   [English](README.md) | [中文](README_zh.md)
 </div>
 
+<div align="center">
+  <img src="real_zh.gif" alt="Weather MCP Tool 演示" width="100%">
+  <p><i>看看如何用自然语言轻松查询天气</i></p>
+</div>
+
 ## ✨ 特性
 
 - 💡 **极简**: 一句话查询天气

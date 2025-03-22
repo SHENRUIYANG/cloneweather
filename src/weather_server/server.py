@@ -26,6 +26,16 @@ async def get_weather(
     lang: str = "zh_cn"
 ) -> WeatherData:
     """
+    Get weather information for a specified city
+    
+    Args:
+        city: City name (supports Chinese or English, e.g., Suzhou, suzhou)
+        units: Temperature unit (metric: Celsius, imperial: Fahrenheit)
+        lang: Response language (zh_cn: Chinese, en: English)
+    
+    Returns:
+        WeatherData: Object containing weather information
+
     获取指定城市的天气信息
     
     Args:
@@ -91,6 +101,17 @@ async def get_weather_forecast(
     lang: str = "zh_cn"
 ) -> dict:
     """
+    Get weather forecast information for a specified city
+    
+    Args:
+        city: City name (supports Chinese or English, e.g., Suzhou, suzhou)
+        days: Number of forecast days (up to 5 days)
+        units: Temperature unit (metric: Celsius, imperial: Fahrenheit)
+        lang: Response language (zh_cn: Chinese, en: English)
+    
+    Returns:
+        dict: Dictionary containing weather forecast information
+
     获取指定城市的天气预报信息
     
     Args:

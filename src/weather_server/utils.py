@@ -6,10 +6,14 @@ import pinyin
 from typing import Dict
 
 class CityNameConverter:
-    """城市名称转换器"""
+    """City name converter for handling Chinese and English city names
+    
+    城市名称转换器"""
     
     def __init__(self):
-        """初始化基础城市映射"""
+        """Initialize basic city mapping
+        
+        初始化基础城市映射"""
         self._city_map: Dict[str, str] = {
             "苏州": "suzhou",
             "北京": "beijing",
@@ -20,6 +24,14 @@ class CityNameConverter:
     
     def to_english(self, city: str) -> str:
         """
+        Convert city name to English
+        
+        Args:
+            city: City name (Chinese or English)
+            
+        Returns:
+            str: English city name
+
         将城市名转换为英文
         
         Args:
