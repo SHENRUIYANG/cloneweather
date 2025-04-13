@@ -19,6 +19,13 @@ city_converter = CityNameConverter()
 # 初始化 FastMCP 服务器
 server = FastMCP()
 
+# 设置响应头，添加Transfer-Encoding: chunked，支持SSE流式响应
+@server.middleware("http")
+async def add_chunked_encoding(request, call_next):
+    response = await call_next(request)
+    response.headers["Transfer-Encoding"] = "chunked"
+    return response
+
 @server.tool()
 async def get_weather(
     city: str,
