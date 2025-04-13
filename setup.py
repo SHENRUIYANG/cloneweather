@@ -15,8 +15,10 @@ setup(
         "python-dotenv>=1.0.1,<2.0.0",
         "pinyin>=0.4.0,<0.5.0",
     ],
-    python_requires=">=3.12.0",
+    python_requires=">=3.10.0",
     classifiers=[
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
         "Operating System :: OS Independent",
         "Development Status :: 4 - Beta",
